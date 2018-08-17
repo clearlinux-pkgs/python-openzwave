@@ -11,10 +11,14 @@ Source1  : https://raw.githubusercontent.com/OpenZWave/python-openzwave/master/a
 Summary  : python_openzwave is a python wrapper for the openzwave c++ library.
 Group    : Development/Tools
 License  : BSD-3-Clause GPL-3.0 ISC LGPL-2.0+ LGPL-2.1+ LGPL-3.0
+Requires: python-openzwave-bin
+Requires: python-openzwave-python3
+Requires: python-openzwave-license
+Requires: python-openzwave-python
+BuildRequires : Cython
 BuildRequires : buildreq-distutils3
-BuildRequires : doxygen
-BuildRequires : graphviz
-BuildRequires : libxml2-dev
+BuildRequires : libopenzwave-dev
+BuildRequires : pip
 BuildRequires : pkgconfig(libudev)
 BuildRequires : pkgconfig(libusb-1.0)
 
@@ -45,6 +49,49 @@ to publish alternative documentation of the Z-Wave protocol, or to
 attempt to "punish" Sigma Designs for their decision to keep the 
 protocol closed.
 
+%package bin
+Summary: bin components for the python-openzwave package.
+Group: Binaries
+Requires: python-openzwave-license
+
+%description bin
+bin components for the python-openzwave package.
+
+
+%package doc
+Summary: doc components for the python-openzwave package.
+Group: Documentation
+
+%description doc
+doc components for the python-openzwave package.
+
+
+%package license
+Summary: license components for the python-openzwave package.
+Group: Default
+
+%description license
+license components for the python-openzwave package.
+
+
+%package python
+Summary: python components for the python-openzwave package.
+Group: Default
+Requires: python-openzwave-python3
+
+%description python
+python components for the python-openzwave package.
+
+
+%package python3
+Summary: python3 components for the python-openzwave package.
+Group: Default
+Requires: python3-core
+
+%description python3
+python3 components for the python-openzwave package.
+
+
 %prep
 %setup -q -n python_openzwave
 cd ..
@@ -57,8 +104,8 @@ export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C
-export SOURCE_DATE_EPOCH=1534532456
-export CFLAGS="-O2 -g -Wp,-D_FORTIFY_SOURCE=2 -fexceptions -fstack-protector --param=ssp-buffer-size=32 -Wno-error -Wl,-z,max-page-size=0x1000 -m64 -march=westmere -mtune=haswell"
+export SOURCE_DATE_EPOCH=1534535305
+export CFLAGS="-O2 -g -Wp,-D_FORTIFY_SOURCE=2 -fexceptions -fstack-protector --param=ssp-buffer-size=32 -Wformat -Wformat-security -Wno-error   -Wl,-z,max-page-size=0x1000 -m64 -march=westmere -mtune=haswell"
 export CXXFLAGS=$CFLAGS
 unset LDFLAGS
 python3 setup.py build -b py3
@@ -80,3 +127,28 @@ echo ----[ mark ]----
 
 %files
 %defattr(-,root,root,-)
+
+%files bin
+%defattr(-,root,root,-)
+/usr/bin/pyozw_check
+/usr/bin/pyozw_shell
+
+%files doc
+%defattr(0644,root,root,0755)
+%doc /usr/share/doc/python\-openzwave/*
+
+%files license
+%defattr(-,root,root,-)
+/usr/share/doc/python-openzwave/openzwave-embed_open-zwave-master_cpp_hidapi_LICENSE-bsd.txt
+/usr/share/doc/python-openzwave/openzwave-embed_open-zwave-master_cpp_hidapi_LICENSE-gpl3.txt
+/usr/share/doc/python-openzwave/openzwave-embed_open-zwave-master_cpp_hidapi_LICENSE-orig.txt
+/usr/share/doc/python-openzwave/openzwave-embed_open-zwave-master_cpp_hidapi_LICENSE.txt
+/usr/share/doc/python-openzwave/openzwave-embed_open-zwave-master_license_gpl.txt
+/usr/share/doc/python-openzwave/openzwave-embed_open-zwave-master_license_license.txt
+
+%files python
+%defattr(-,root,root,-)
+
+%files python3
+%defattr(-,root,root,-)
+/usr/lib/python3*/*
