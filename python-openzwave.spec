@@ -4,7 +4,7 @@
 #
 Name     : python-openzwave
 Version  : 0.4.9
-Release  : 2
+Release  : 3
 URL      : https://raw.githubusercontent.com/OpenZWave/python-openzwave/master/archives/python_openzwave-0.4.9.zip
 Source0  : https://raw.githubusercontent.com/OpenZWave/python-openzwave/master/archives/python_openzwave-0.4.9.zip
 Source1  : https://raw.githubusercontent.com/OpenZWave/python-openzwave/master/archives/open-zwave-master-0.4.9.zip
