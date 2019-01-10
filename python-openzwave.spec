@@ -4,17 +4,18 @@
 #
 Name     : python-openzwave
 Version  : 0.4.9
-Release  : 3
+Release  : 4
 URL      : https://raw.githubusercontent.com/OpenZWave/python-openzwave/master/archives/python_openzwave-0.4.9.zip
 Source0  : https://raw.githubusercontent.com/OpenZWave/python-openzwave/master/archives/python_openzwave-0.4.9.zip
 Source1  : https://raw.githubusercontent.com/OpenZWave/python-openzwave/master/archives/open-zwave-master-0.4.9.zip
 Summary  : python_openzwave is a python wrapper for the openzwave c++ library.
 Group    : Development/Tools
 License  : BSD-3-Clause GPL-3.0 ISC LGPL-2.0+ LGPL-2.1+ LGPL-3.0
-Requires: python-openzwave-bin
-Requires: python-openzwave-python3
-Requires: python-openzwave-license
-Requires: python-openzwave-python
+Requires: python-openzwave-bin = %{version}-%{release}
+Requires: python-openzwave-license = %{version}-%{release}
+Requires: python-openzwave-python = %{version}-%{release}
+Requires: python-openzwave-python3 = %{version}-%{release}
+Requires: Cython
 Requires: PyDispatcher
 BuildRequires : Cython
 BuildRequires : PyDispatcher
@@ -54,18 +55,10 @@ protocol closed.
 %package bin
 Summary: bin components for the python-openzwave package.
 Group: Binaries
-Requires: python-openzwave-license
+Requires: python-openzwave-license = %{version}-%{release}
 
 %description bin
 bin components for the python-openzwave package.
-
-
-%package doc
-Summary: doc components for the python-openzwave package.
-Group: Documentation
-
-%description doc
-doc components for the python-openzwave package.
 
 
 %package license
@@ -79,7 +72,7 @@ license components for the python-openzwave package.
 %package python
 Summary: python components for the python-openzwave package.
 Group: Default
-Requires: python-openzwave-python3
+Requires: python-openzwave-python3 = %{version}-%{release}
 
 %description python
 python components for the python-openzwave package.
@@ -99,30 +92,31 @@ python3 components for the python-openzwave package.
 cd ..
 %setup -q -T -D -n python_openzwave -b 1
 mkdir -p openzwave-embed/open-zwave-master
-mv %{_topdir}/BUILD/open-zwave-master/* %{_topdir}/BUILD/python_openzwave/openzwave-embed/open-zwave-master
+cp -r %{_topdir}/BUILD/open-zwave-master/* %{_topdir}/BUILD/python_openzwave/openzwave-embed/open-zwave-master
 
 %build
 export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C
-export SOURCE_DATE_EPOCH=1534701155
-export CFLAGS="-O2 -g -Wp,-D_FORTIFY_SOURCE=2 -fexceptions -fstack-protector --param=ssp-buffer-size=32 -Wformat -Wformat-security -Wno-error   -Wl,-z,max-page-size=0x1000 -m64 -march=westmere -mtune=haswell"
+export SOURCE_DATE_EPOCH=1547142164
+export CFLAGS="-O2 -g -Wp,-D_FORTIFY_SOURCE=2 -fexceptions -fstack-protector --param=ssp-buffer-size=32 -Wformat -Wformat-security -Wno-error -Wl,-z,max-page-size=0x1000 -march=westmere -mtune=haswell"
 export CXXFLAGS=$CFLAGS
 unset LDFLAGS
-python3 setup.py build -b py3
+export MAKEFLAGS=%{?_smp_mflags}
+python3 setup.py build
 
 %install
 rm -rf %{buildroot}
-mkdir -p %{buildroot}/usr/share/doc/python-openzwave
-cp openzwave-embed/open-zwave-master/cpp/hidapi/LICENSE-bsd.txt %{buildroot}/usr/share/doc/python-openzwave/openzwave-embed_open-zwave-master_cpp_hidapi_LICENSE-bsd.txt
-cp openzwave-embed/open-zwave-master/cpp/hidapi/LICENSE-gpl3.txt %{buildroot}/usr/share/doc/python-openzwave/openzwave-embed_open-zwave-master_cpp_hidapi_LICENSE-gpl3.txt
-cp openzwave-embed/open-zwave-master/cpp/hidapi/LICENSE-orig.txt %{buildroot}/usr/share/doc/python-openzwave/openzwave-embed_open-zwave-master_cpp_hidapi_LICENSE-orig.txt
-cp openzwave-embed/open-zwave-master/cpp/hidapi/LICENSE.txt %{buildroot}/usr/share/doc/python-openzwave/openzwave-embed_open-zwave-master_cpp_hidapi_LICENSE.txt
-cp openzwave-embed/open-zwave-master/debian/copyright %{buildroot}/usr/share/doc/python-openzwave/openzwave-embed_open-zwave-master_debian_copyright
-cp openzwave-embed/open-zwave-master/license/gpl.txt %{buildroot}/usr/share/doc/python-openzwave/openzwave-embed_open-zwave-master_license_gpl.txt
-cp openzwave-embed/open-zwave-master/license/license.txt %{buildroot}/usr/share/doc/python-openzwave/openzwave-embed_open-zwave-master_license_license.txt
-python3 -tt setup.py build -b py3 install --root=%{buildroot}
+mkdir -p %{buildroot}/usr/share/package-licenses/python-openzwave
+cp openzwave-embed/open-zwave-master/cpp/hidapi/LICENSE-bsd.txt %{buildroot}/usr/share/package-licenses/python-openzwave/openzwave-embed_open-zwave-master_cpp_hidapi_LICENSE-bsd.txt
+cp openzwave-embed/open-zwave-master/cpp/hidapi/LICENSE-gpl3.txt %{buildroot}/usr/share/package-licenses/python-openzwave/openzwave-embed_open-zwave-master_cpp_hidapi_LICENSE-gpl3.txt
+cp openzwave-embed/open-zwave-master/cpp/hidapi/LICENSE-orig.txt %{buildroot}/usr/share/package-licenses/python-openzwave/openzwave-embed_open-zwave-master_cpp_hidapi_LICENSE-orig.txt
+cp openzwave-embed/open-zwave-master/cpp/hidapi/LICENSE.txt %{buildroot}/usr/share/package-licenses/python-openzwave/openzwave-embed_open-zwave-master_cpp_hidapi_LICENSE.txt
+cp openzwave-embed/open-zwave-master/debian/copyright %{buildroot}/usr/share/package-licenses/python-openzwave/openzwave-embed_open-zwave-master_debian_copyright
+cp openzwave-embed/open-zwave-master/license/gpl.txt %{buildroot}/usr/share/package-licenses/python-openzwave/openzwave-embed_open-zwave-master_license_gpl.txt
+cp openzwave-embed/open-zwave-master/license/license.txt %{buildroot}/usr/share/package-licenses/python-openzwave/openzwave-embed_open-zwave-master_license_license.txt
+python3 -tt setup.py build  install --root=%{buildroot}
 echo ----[ mark ]----
 cat %{buildroot}/usr/lib/python3*/site-packages/*/requires.txt || :
 echo ----[ mark ]----
@@ -135,18 +129,15 @@ echo ----[ mark ]----
 /usr/bin/pyozw_check
 /usr/bin/pyozw_shell
 
-%files doc
-%defattr(0644,root,root,0755)
-%doc /usr/share/doc/python\-openzwave/*
-
 %files license
-%defattr(-,root,root,-)
-/usr/share/doc/python-openzwave/openzwave-embed_open-zwave-master_cpp_hidapi_LICENSE-bsd.txt
-/usr/share/doc/python-openzwave/openzwave-embed_open-zwave-master_cpp_hidapi_LICENSE-gpl3.txt
-/usr/share/doc/python-openzwave/openzwave-embed_open-zwave-master_cpp_hidapi_LICENSE-orig.txt
-/usr/share/doc/python-openzwave/openzwave-embed_open-zwave-master_cpp_hidapi_LICENSE.txt
-/usr/share/doc/python-openzwave/openzwave-embed_open-zwave-master_license_gpl.txt
-/usr/share/doc/python-openzwave/openzwave-embed_open-zwave-master_license_license.txt
+%defattr(0644,root,root,0755)
+/usr/share/package-licenses/python-openzwave/openzwave-embed_open-zwave-master_cpp_hidapi_LICENSE-bsd.txt
+/usr/share/package-licenses/python-openzwave/openzwave-embed_open-zwave-master_cpp_hidapi_LICENSE-gpl3.txt
+/usr/share/package-licenses/python-openzwave/openzwave-embed_open-zwave-master_cpp_hidapi_LICENSE-orig.txt
+/usr/share/package-licenses/python-openzwave/openzwave-embed_open-zwave-master_cpp_hidapi_LICENSE.txt
+/usr/share/package-licenses/python-openzwave/openzwave-embed_open-zwave-master_debian_copyright
+/usr/share/package-licenses/python-openzwave/openzwave-embed_open-zwave-master_license_gpl.txt
+/usr/share/package-licenses/python-openzwave/openzwave-embed_open-zwave-master_license_license.txt
 
 %files python
 %defattr(-,root,root,-)
