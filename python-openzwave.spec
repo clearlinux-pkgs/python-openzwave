@@ -4,7 +4,7 @@
 #
 Name     : python-openzwave
 Version  : 0.4.9
-Release  : 4
+Release  : 5
 URL      : https://raw.githubusercontent.com/OpenZWave/python-openzwave/master/archives/python_openzwave-0.4.9.zip
 Source0  : https://raw.githubusercontent.com/OpenZWave/python-openzwave/master/archives/python_openzwave-0.4.9.zip
 Source1  : https://raw.githubusercontent.com/OpenZWave/python-openzwave/master/archives/open-zwave-master-0.4.9.zip
@@ -17,6 +17,7 @@ Requires: python-openzwave-python = %{version}-%{release}
 Requires: python-openzwave-python3 = %{version}-%{release}
 Requires: Cython
 Requires: PyDispatcher
+Requires: six
 BuildRequires : Cython
 BuildRequires : PyDispatcher
 BuildRequires : buildreq-distutils3
@@ -99,7 +100,7 @@ export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C
-export SOURCE_DATE_EPOCH=1547142164
+export SOURCE_DATE_EPOCH=1547143165
 export CFLAGS="-O2 -g -Wp,-D_FORTIFY_SOURCE=2 -fexceptions -fstack-protector --param=ssp-buffer-size=32 -Wformat -Wformat-security -Wno-error -Wl,-z,max-page-size=0x1000 -march=westmere -mtune=haswell"
 export CXXFLAGS=$CFLAGS
 unset LDFLAGS
@@ -107,6 +108,7 @@ export MAKEFLAGS=%{?_smp_mflags}
 python3 setup.py build
 
 %install
+export MAKEFLAGS=%{?_smp_mflags}
 rm -rf %{buildroot}
 mkdir -p %{buildroot}/usr/share/package-licenses/python-openzwave
 cp openzwave-embed/open-zwave-master/cpp/hidapi/LICENSE-bsd.txt %{buildroot}/usr/share/package-licenses/python-openzwave/openzwave-embed_open-zwave-master_cpp_hidapi_LICENSE-bsd.txt
