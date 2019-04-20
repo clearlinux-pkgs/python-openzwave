@@ -4,7 +4,7 @@
 #
 Name     : python-openzwave
 Version  : 1
-Release  : 8
+Release  : 9
 URL      : https://github.com/home-assistant/python-openzwave/archive/v0.1.2.zip
 Source0  : https://github.com/home-assistant/python-openzwave/archive/v0.1.2.zip
 Source1  : https://raw.githubusercontent.com/OpenZWave/python-openzwave/master/archives/open-zwave-master-0.4.9.zip
