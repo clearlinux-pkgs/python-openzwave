@@ -4,13 +4,13 @@
 #
 Name     : python-openzwave
 Version  : 0.1.4
-Release  : 13
+Release  : 14
 URL      : https://github.com/home-assistant/python-openzwave/archive/v0.1.4.tar.gz
 Source0  : https://github.com/home-assistant/python-openzwave/archive/v0.1.4.tar.gz
 Source1  : https://raw.githubusercontent.com/OpenZWave/python-openzwave/master/archives/open-zwave-master-0.4.9.zip
-Summary  : Library to access Z-Wave interfaces
+Summary  : No detailed summary available
 Group    : Development/Tools
-License  : BSD-3-Clause GPL-2.0 GPL-3.0 ISC LGPL-2.0+ LGPL-2.1+ LGPL-3.0
+License  : BSD-3-Clause GPL-2.0 GPL-3.0 ISC LGPL-3.0
 Requires: python-openzwave-bin = %{version}-%{release}
 Requires: python-openzwave-license = %{version}-%{release}
 Requires: python-openzwave-python = %{version}-%{release}
@@ -23,36 +23,12 @@ BuildRequires : PyDispatcher
 BuildRequires : buildreq-distutils3
 BuildRequires : libopenzwave-dev
 BuildRequires : pip
-BuildRequires : pkgconfig(libudev)
-BuildRequires : pkgconfig(libusb-1.0)
 BuildRequires : six
 
 %description
-OpenZWave is an open-source, cross-platform library designed to enable anyone to
-add support for Z-Wave home-automation devices to their applications, without 
-requiring any in depth knowledge of the Z-Wave protocol.
-
-Z-Wave employs a proprietary protocol which the owners, Sigma Designs, have 
-chosen not to release into the public domain. There is also no official free 
-or low-cost SDK that can be used to develop applications (The ControlThink SDK
-is now tied exclusively to their own Z-Wave PC interface). The only way to 
-obtain the protocol documentation and sample code is to purchase an expensive 
-development kit, and sign a non-disclosure agreement (NDA) preventing the 
-release of that knowledge.
-
-OpenZWave was created to fill that gap. We do not have the official 
-documentation, have signed no NDA, and are free to develop the library as we 
-see fit. Our knowledge comes from existing bodies of open-source code 
-(principally the Z-Wave parts of LinuxMCE), and through examining the 
-messages sent by Z-Wave devices.
-
-The goal of the project is to make a positive contribution to the Z-Wave 
-community by creating a library that supports as much of the Z-Wave 
-specification as possible, and that can be used as a "black-box" solution 
-by anyone wanting to add Z-Wave to their application. It is NOT our aim 
-to publish alternative documentation of the Z-Wave protocol, or to 
-attempt to "punish" Sigma Designs for their decision to keep the 
-protocol closed.
+.. image:: https://travis-ci.org/OpenZWave/python-openzwave.svg?branch=master
+:target: https://travis-ci.org/OpenZWave/python-openzwave
+:alt: Travis status
 
 %package bin
 Summary: bin components for the python-openzwave package.
@@ -91,17 +67,19 @@ python3 components for the python-openzwave package.
 
 %prep
 %setup -q -n python-openzwave-0.1.4
-cd ..
-%setup -q -T -D -n python-openzwave-0.1.4 -b 1
+cd %{_builddir}
+unzip -q %{_sourcedir}/open-zwave-master-0.4.9.zip
+cd %{_builddir}/python-openzwave-0.1.4
 mkdir -p openzwave-embed/open-zwave-master
-cp -r %{_topdir}/BUILD/open-zwave-master/* %{_topdir}/BUILD/python-openzwave-0.1.4/openzwave-embed/open-zwave-master
+cp -r %{_builddir}/open-zwave-master/* %{_builddir}/python-openzwave-0.1.4/openzwave-embed/open-zwave-master
 
 %build
 export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
-export LANG=C
-export SOURCE_DATE_EPOCH=1558667049
+export LANG=C.UTF-8
+export SOURCE_DATE_EPOCH=1583214270
+# -Werror is for werrorists
 export GCC_IGNORE_WERROR=1
 export CFLAGS="-O2 -g -Wp,-D_FORTIFY_SOURCE=2 -fexceptions -fstack-protector --param=ssp-buffer-size=32 -Wformat -Wformat-security -Wno-error -Wl,-z,max-page-size=0x1000 -march=westmere -mtune=haswell"
 export CXXFLAGS=$CFLAGS
@@ -117,16 +95,16 @@ python3 setup.py build
 export MAKEFLAGS=%{?_smp_mflags}
 rm -rf %{buildroot}
 mkdir -p %{buildroot}/usr/share/package-licenses/python-openzwave
-cp COPYRIGHT.txt %{buildroot}/usr/share/package-licenses/python-openzwave/COPYRIGHT.txt
-cp LICENSE.txt %{buildroot}/usr/share/package-licenses/python-openzwave/LICENSE.txt
-cp debian/copyright %{buildroot}/usr/share/package-licenses/python-openzwave/debian_copyright
-cp openzwave-embed/open-zwave-master/cpp/hidapi/LICENSE-bsd.txt %{buildroot}/usr/share/package-licenses/python-openzwave/openzwave-embed_open-zwave-master_cpp_hidapi_LICENSE-bsd.txt
-cp openzwave-embed/open-zwave-master/cpp/hidapi/LICENSE-gpl3.txt %{buildroot}/usr/share/package-licenses/python-openzwave/openzwave-embed_open-zwave-master_cpp_hidapi_LICENSE-gpl3.txt
-cp openzwave-embed/open-zwave-master/cpp/hidapi/LICENSE-orig.txt %{buildroot}/usr/share/package-licenses/python-openzwave/openzwave-embed_open-zwave-master_cpp_hidapi_LICENSE-orig.txt
-cp openzwave-embed/open-zwave-master/cpp/hidapi/LICENSE.txt %{buildroot}/usr/share/package-licenses/python-openzwave/openzwave-embed_open-zwave-master_cpp_hidapi_LICENSE.txt
-cp openzwave-embed/open-zwave-master/debian/copyright %{buildroot}/usr/share/package-licenses/python-openzwave/openzwave-embed_open-zwave-master_debian_copyright
-cp openzwave-embed/open-zwave-master/license/gpl.txt %{buildroot}/usr/share/package-licenses/python-openzwave/openzwave-embed_open-zwave-master_license_gpl.txt
-cp openzwave-embed/open-zwave-master/license/license.txt %{buildroot}/usr/share/package-licenses/python-openzwave/openzwave-embed_open-zwave-master_license_license.txt
+cp %{_builddir}/open-zwave-master/cpp/hidapi/LICENSE-bsd.txt %{buildroot}/usr/share/package-licenses/python-openzwave/7dde42b4c6fdafae722d8d07556b6d9dba4d2963
+cp %{_builddir}/open-zwave-master/cpp/hidapi/LICENSE-gpl3.txt %{buildroot}/usr/share/package-licenses/python-openzwave/8624bcdae55baeef00cd11d5dfcfa60f68710a02
+cp %{_builddir}/open-zwave-master/cpp/hidapi/LICENSE-orig.txt %{buildroot}/usr/share/package-licenses/python-openzwave/66047dbcf3fd689c99472266f5ad141c53d6f2c6
+cp %{_builddir}/open-zwave-master/cpp/hidapi/LICENSE.txt %{buildroot}/usr/share/package-licenses/python-openzwave/07ee706ea70d84685d8ee57557052a7ab00c960a
+cp %{_builddir}/open-zwave-master/debian/copyright %{buildroot}/usr/share/package-licenses/python-openzwave/c9cb6e1003d94c0123949178f34321343e9115a6
+cp %{_builddir}/open-zwave-master/license/gpl.txt %{buildroot}/usr/share/package-licenses/python-openzwave/2a0d409439280c8cfc806f890b757d9bd8a19a09
+cp %{_builddir}/open-zwave-master/license/license.txt %{buildroot}/usr/share/package-licenses/python-openzwave/2b26df014bec35b26b16f333522989336e24e488
+cp %{_builddir}/python-openzwave-0.1.4/COPYRIGHT.txt %{buildroot}/usr/share/package-licenses/python-openzwave/f0cb7c2c2db59bd17a620fd5070dffe7aa8acdb6
+cp %{_builddir}/python-openzwave-0.1.4/LICENSE.txt %{buildroot}/usr/share/package-licenses/python-openzwave/f0cb7c2c2db59bd17a620fd5070dffe7aa8acdb6
+cp %{_builddir}/python-openzwave-0.1.4/debian/copyright %{buildroot}/usr/share/package-licenses/python-openzwave/215fd18143ce0317e4e689997e898cfbc9b68196
 python3 -tt setup.py build  install --root=%{buildroot}
 echo ----[ mark ]----
 cat %{buildroot}/usr/lib/python3*/site-packages/*/requires.txt || :
@@ -142,16 +120,15 @@ echo ----[ mark ]----
 
 %files license
 %defattr(0644,root,root,0755)
-/usr/share/package-licenses/python-openzwave/COPYRIGHT.txt
-/usr/share/package-licenses/python-openzwave/LICENSE.txt
-/usr/share/package-licenses/python-openzwave/debian_copyright
-/usr/share/package-licenses/python-openzwave/openzwave-embed_open-zwave-master_cpp_hidapi_LICENSE-bsd.txt
-/usr/share/package-licenses/python-openzwave/openzwave-embed_open-zwave-master_cpp_hidapi_LICENSE-gpl3.txt
-/usr/share/package-licenses/python-openzwave/openzwave-embed_open-zwave-master_cpp_hidapi_LICENSE-orig.txt
-/usr/share/package-licenses/python-openzwave/openzwave-embed_open-zwave-master_cpp_hidapi_LICENSE.txt
-/usr/share/package-licenses/python-openzwave/openzwave-embed_open-zwave-master_debian_copyright
-/usr/share/package-licenses/python-openzwave/openzwave-embed_open-zwave-master_license_gpl.txt
-/usr/share/package-licenses/python-openzwave/openzwave-embed_open-zwave-master_license_license.txt
+/usr/share/package-licenses/python-openzwave/07ee706ea70d84685d8ee57557052a7ab00c960a
+/usr/share/package-licenses/python-openzwave/215fd18143ce0317e4e689997e898cfbc9b68196
+/usr/share/package-licenses/python-openzwave/2a0d409439280c8cfc806f890b757d9bd8a19a09
+/usr/share/package-licenses/python-openzwave/2b26df014bec35b26b16f333522989336e24e488
+/usr/share/package-licenses/python-openzwave/66047dbcf3fd689c99472266f5ad141c53d6f2c6
+/usr/share/package-licenses/python-openzwave/7dde42b4c6fdafae722d8d07556b6d9dba4d2963
+/usr/share/package-licenses/python-openzwave/8624bcdae55baeef00cd11d5dfcfa60f68710a02
+/usr/share/package-licenses/python-openzwave/c9cb6e1003d94c0123949178f34321343e9115a6
+/usr/share/package-licenses/python-openzwave/f0cb7c2c2db59bd17a620fd5070dffe7aa8acdb6
 
 %files python
 %defattr(-,root,root,-)
