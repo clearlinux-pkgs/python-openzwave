@@ -4,7 +4,7 @@
 #
 Name     : python-openzwave
 Version  : 0.1.8
-Release  : 15
+Release  : 16
 URL      : https://github.com/home-assistant/python-openzwave/archive/v0.1.8/python-openzwave-0.1.8.tar.gz
 Source0  : https://github.com/home-assistant/python-openzwave/archive/v0.1.8/python-openzwave-0.1.8.tar.gz
 Source1  : https://raw.githubusercontent.com/OpenZWave/python-openzwave/master/archives/open-zwave-master-0.4.9.zip
@@ -78,7 +78,8 @@ export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C.UTF-8
-export SOURCE_DATE_EPOCH=1583532892
+export SOURCE_DATE_EPOCH=1584374080
+# -Werror is for werrorists
 export GCC_IGNORE_WERROR=1
 export CFLAGS="-O2 -g -Wp,-D_FORTIFY_SOURCE=2 -fexceptions -fstack-protector --param=ssp-buffer-size=32 -Wformat -Wformat-security -Wno-error -Wl,-z,max-page-size=0x1000 -march=westmere -mtune=haswell"
 export CXXFLAGS=$CFLAGS
