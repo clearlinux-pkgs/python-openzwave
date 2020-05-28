@@ -4,7 +4,7 @@
 #
 Name     : python-openzwave
 Version  : 0.4.19
-Release  : 19
+Release  : 20
 URL      : https://github.com/OpenZWave/python-openzwave/archive/v0.4.19/python-openzwave-0.4.19.tar.gz
 Source0  : https://github.com/OpenZWave/python-openzwave/archive/v0.4.19/python-openzwave-0.4.19.tar.gz
 Source1  : https://raw.githubusercontent.com/OpenZWave/python-openzwave/master/archives/open-zwave-master-0.4.9.zip
@@ -25,6 +25,7 @@ BuildRequires : buildreq-distutils3
 BuildRequires : libopenzwave-dev
 BuildRequires : pip
 BuildRequires : six
+Patch1: 0001-Relax-Cython-version-pinning.patch
 
 %description
 .. image:: https://travis-ci.org/OpenZWave/python-openzwave.svg?branch=master
@@ -73,13 +74,14 @@ unzip -q %{_sourcedir}/open-zwave-master-0.4.9.zip
 cd %{_builddir}/python-openzwave-0.4.19
 mkdir -p openzwave-embed/open-zwave-master
 cp -r %{_builddir}/open-zwave-master/* %{_builddir}/python-openzwave-0.4.19/openzwave-embed/open-zwave-master
+%patch1 -p1
 
 %build
 export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C.UTF-8
-export SOURCE_DATE_EPOCH=1590687765
+export SOURCE_DATE_EPOCH=1590701294
 export GCC_IGNORE_WERROR=1
 export CFLAGS="-O2 -g -Wp,-D_FORTIFY_SOURCE=2 -fexceptions -fstack-protector --param=ssp-buffer-size=32 -Wformat -Wformat-security -Wno-error -Wl,-z,max-page-size=0x1000 -march=westmere -mtune=haswell"
 export CXXFLAGS=$CFLAGS

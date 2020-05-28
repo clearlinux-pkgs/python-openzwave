@@ -1,0 +1,32 @@
+From 698eaa48ae2af7f3fa295edf86aae1a69f66f5e4 Mon Sep 17 00:00:00 2001
+From: "Brett T. Warden" <brett.t.warden@intel.com>
+Date: Thu, 28 May 2020 13:22:09 -0700
+Subject: [PATCH] Relax Cython version pinning
+
+---
+ pyozw_setup.py | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/pyozw_setup.py b/pyozw_setup.py
+index b201840f8710..37bf2a8bf355 100644
+--- a/pyozw_setup.py
++++ b/pyozw_setup.py
+@@ -257,13 +257,13 @@ class Template(object):
+         if sys.platform.startswith("win"):
+             return ['Cython']
+         else:
+-            return ['Cython==0.28.6']
++            return ['Cython>=0.28.6']
+ 
+     def build_requires(self):
+         if sys.platform.startswith("win"):
+             return ['Cython']
+         else:
+-            return ['Cython==0.28.6']
++            return ['Cython>=0.28.6']
+ 
+     def build(self):
+         if len(self.ctx['extra_objects']) == 1 and os.path.isfile(self.ctx['extra_objects'][0]):
+-- 
+2.26.2
+
