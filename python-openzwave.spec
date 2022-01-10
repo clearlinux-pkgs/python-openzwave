@@ -4,7 +4,7 @@
 #
 Name     : python-openzwave
 Version  : 0.4.19
-Release  : 34
+Release  : 35
 URL      : https://github.com/OpenZWave/python-openzwave/archive/v0.4.19/python-openzwave-0.4.19.tar.gz
 Source0  : https://github.com/OpenZWave/python-openzwave/archive/v0.4.19/python-openzwave-0.4.19.tar.gz
 Source1  : https://raw.githubusercontent.com/OpenZWave/python-openzwave/master/archives/open-zwave-master-0.4.9.zip
@@ -15,18 +15,17 @@ Requires: python-openzwave-bin = %{version}-%{release}
 Requires: python-openzwave-license = %{version}-%{release}
 Requires: python-openzwave-python = %{version}-%{release}
 Requires: python-openzwave-python3 = %{version}-%{release}
-Requires: Cython
-Requires: PyDispatcher
-Requires: pyserial
-Requires: six
-BuildRequires : Cython
+Requires: pypi(cython)
+Requires: pypi(pydispatcher)
+Requires: pypi(pyserial)
+Requires: pypi(six)
 BuildRequires : Cython-python
-BuildRequires : PyDispatcher
 BuildRequires : buildreq-distutils3
 BuildRequires : libopenzwave-dev
 BuildRequires : pip
-BuildRequires : pyserial
-BuildRequires : six
+BuildRequires : pypi(cython)
+BuildRequires : pypi(pydispatcher)
+BuildRequires : python3-dev
 Patch1: 0001-Relax-Cython-version-pinning.patch
 
 %description
@@ -83,7 +82,7 @@ export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C.UTF-8
-export SOURCE_DATE_EPOCH=1590866651
+export SOURCE_DATE_EPOCH=1641841509
 export GCC_IGNORE_WERROR=1
 export CFLAGS="-O2 -g -Wp,-D_FORTIFY_SOURCE=2 -fexceptions -fstack-protector --param=ssp-buffer-size=32 -Wformat -Wformat-security -Wno-error -Wl,-z,max-page-size=0x1000 -march=westmere -mtune=haswell"
 export CXXFLAGS=$CFLAGS
