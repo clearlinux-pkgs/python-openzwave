@@ -4,13 +4,13 @@
 #
 Name     : python-openzwave
 Version  : 0.4.19
-Release  : 35
+Release  : 36
 URL      : https://github.com/OpenZWave/python-openzwave/archive/v0.4.19/python-openzwave-0.4.19.tar.gz
 Source0  : https://github.com/OpenZWave/python-openzwave/archive/v0.4.19/python-openzwave-0.4.19.tar.gz
 Source1  : https://raw.githubusercontent.com/OpenZWave/python-openzwave/master/archives/open-zwave-master-0.4.9.zip
 Summary  : No detailed summary available
 Group    : Development/Tools
-License  : BSD-3-Clause GPL-2.0 GPL-3.0 ISC LGPL-3.0
+License  : Apache-2.0 BSD-3-Clause GPL-2.0 GPL-3.0 ISC LGPL-3.0
 Requires: python-openzwave-bin = %{version}-%{release}
 Requires: python-openzwave-license = %{version}-%{release}
 Requires: python-openzwave-python = %{version}-%{release}
@@ -19,10 +19,8 @@ Requires: pypi(cython)
 Requires: pypi(pydispatcher)
 Requires: pypi(pyserial)
 Requires: pypi(six)
-BuildRequires : Cython-python
 BuildRequires : buildreq-distutils3
 BuildRequires : libopenzwave-dev
-BuildRequires : pip
 BuildRequires : pypi(cython)
 BuildRequires : pypi(pydispatcher)
 BuildRequires : python3-dev
@@ -82,7 +80,7 @@ export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C.UTF-8
-export SOURCE_DATE_EPOCH=1641841509
+export SOURCE_DATE_EPOCH=1642369686
 export GCC_IGNORE_WERROR=1
 export CFLAGS="-O2 -g -Wp,-D_FORTIFY_SOURCE=2 -fexceptions -fstack-protector --param=ssp-buffer-size=32 -Wformat -Wformat-security -Wno-error -Wl,-z,max-page-size=0x1000 -march=westmere -mtune=haswell"
 export CXXFLAGS=$CFLAGS
@@ -105,7 +103,10 @@ cp %{_builddir}/open-zwave-master/cpp/hidapi/LICENSE-gpl3.txt %{buildroot}/usr/s
 cp %{_builddir}/open-zwave-master/cpp/hidapi/LICENSE-orig.txt %{buildroot}/usr/share/package-licenses/python-openzwave/66047dbcf3fd689c99472266f5ad141c53d6f2c6
 cp %{_builddir}/open-zwave-master/cpp/hidapi/LICENSE.txt %{buildroot}/usr/share/package-licenses/python-openzwave/07ee706ea70d84685d8ee57557052a7ab00c960a
 cp %{_builddir}/open-zwave-master/debian/copyright %{buildroot}/usr/share/package-licenses/python-openzwave/c9cb6e1003d94c0123949178f34321343e9115a6
+cp %{_builddir}/open-zwave-master/license/Apache-License-2.0.txt %{buildroot}/usr/share/package-licenses/python-openzwave/ec55bbbac66db486cb2c8160a6dc16c98aa2a5b5
 cp %{_builddir}/open-zwave-master/license/gpl.txt %{buildroot}/usr/share/package-licenses/python-openzwave/2a0d409439280c8cfc806f890b757d9bd8a19a09
+cp %{_builddir}/open-zwave-master/license/gpl.txt %{buildroot}/usr/share/package-licenses/python-openzwave/2a0d409439280c8cfc806f890b757d9bd8a19a09
+cp %{_builddir}/open-zwave-master/license/license.txt %{buildroot}/usr/share/package-licenses/python-openzwave/2b26df014bec35b26b16f333522989336e24e488
 cp %{_builddir}/open-zwave-master/license/license.txt %{buildroot}/usr/share/package-licenses/python-openzwave/2b26df014bec35b26b16f333522989336e24e488
 cp %{_builddir}/python-openzwave-0.4.19/COPYRIGHT.txt %{buildroot}/usr/share/package-licenses/python-openzwave/f0cb7c2c2db59bd17a620fd5070dffe7aa8acdb6
 cp %{_builddir}/python-openzwave-0.4.19/LICENSE.txt %{buildroot}/usr/share/package-licenses/python-openzwave/f0cb7c2c2db59bd17a620fd5070dffe7aa8acdb6
@@ -133,6 +134,7 @@ echo ----[ mark ]----
 /usr/share/package-licenses/python-openzwave/7dde42b4c6fdafae722d8d07556b6d9dba4d2963
 /usr/share/package-licenses/python-openzwave/8624bcdae55baeef00cd11d5dfcfa60f68710a02
 /usr/share/package-licenses/python-openzwave/c9cb6e1003d94c0123949178f34321343e9115a6
+/usr/share/package-licenses/python-openzwave/ec55bbbac66db486cb2c8160a6dc16c98aa2a5b5
 /usr/share/package-licenses/python-openzwave/f0cb7c2c2db59bd17a620fd5070dffe7aa8acdb6
 
 %files python
